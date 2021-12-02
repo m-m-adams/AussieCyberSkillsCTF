@@ -11,7 +11,7 @@ fn expand_center(s: &Vec<u8>, mut l: usize, mut r: usize) -> usize {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut s = fs::read("./palindrome.txt")?;
+    let s = fs::read("./palindrome.txt")?;
     //s.retain(|&x| x != 10_u8);
     println!("{:?}", str::from_utf8(&s[0..23]));
 

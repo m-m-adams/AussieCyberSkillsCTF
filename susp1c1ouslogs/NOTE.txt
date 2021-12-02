@@ -1,0 +1,36 @@
+Our organization "Fedora Corp." has a large number of servers. All the servers have similar ports open, namely port 21 FTP, port 22 SSH and port 80 HTTP. The web technologies in use are: 
+
+1. CMS - SPIP 
+
+2. JavaScript Libraries - JQuery 3.2.1 and JQuery Migrate 3.0.1
+
+3. Miscellanous - HTTP/2
+
+4. Reverse Proxies - Nginx
+
+5. Web Server - Nginx
+
+6. UI Framework - ZURB Foundation
+
+7. Programming Languages - GraphQL, PHP, TypeScript, Python
+
+8. Advertising - District M
+
+9. Widgets - Google Plus
+
+10. Analytics - Branch, Cloudflare Browser Insights, Google Analytics, Datadog
+
+11. Marketing Automation - Branch
+
+12. Social Login - Google Sign-In
+
+13. CDN - Cloudflare
+
+14. Web Frameworks - Django
+
+15. Issue Trackers - Sentry
+
+After investigating logs, we found that someone tried to read the files locally. 
+There were many failed attempts from the web and payloads were also observed from SSH and FTP to get into the system. We are not able to find what kind of attack attempt was made by the attackers. 
+
+So we are providing you the logs, can you find out what kind of attack attempt was made by the anonymouse attackers?
