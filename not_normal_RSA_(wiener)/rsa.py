@@ -1,4 +1,6 @@
 import math
+import gmpy2
+# large e implies a small d (one chosen small value d or e guarantees the other is  which makes it vulnerable to Wiener's attack
 
 
 def DevContinuedFraction(num, denum):
@@ -6,7 +8,7 @@ def DevContinuedFraction(num, denum):
     divisionRests = []
     for i in range(int(math.log(denum, 2)/1)):
         divisionRests = num % denum
-        partialQuotients.append(num / denum)
+        partialQuotients.append(num // denum)
         num = denum
         denum = divisionRests
         if denum == 0:
@@ -32,7 +34,7 @@ def SquareAndMultiply(base, exponent, modulus):
     binaryExponent = []
     while exponent != 0:
         binaryExponent.append(exponent % 2)
-        exponent = exponent/2
+        exponent = exponent//2
     result = 1
     binaryExponent.reverse()
     for i in binaryExponent:
@@ -61,22 +63,6 @@ def GetTheFlag(C, N, d):
           for j in reversed(range(0, size << 3, 8))]))
 
 
-def find_invpow(x, n):
-    high = 1
-    while high ** n < x:
-        high *= 2
-    low = high/2
-    while low < high:
-        mid = (low + high) // 2
-        if low < mid and mid**n < x:
-            low = mid
-        elif high > mid and mid**n > x:
-            high = mid
-        else:
-            return mid
-    return mid + 1
-
-
 def FullReverse(N, e, c):
     phi = (e*c[1]-1)//c[0]
     a = 1
@@ -84,13 +70,14 @@ def FullReverse(N, e, c):
     c = N
     delta = b*b - 4*a*c
     if delta > 0:
-        x1 = (-b + find_invpow((b*b - 4*a*c), 2))/(2*a)
-        x2 = (-b - find_invpow((b*b - 4*a*c), 2))/(2*a)
-        if x1*x2 == N:
-            print("p = "+str(x1))
-            print("q = "+str(x2))
-        else:
-            print("** Error **")
+        try:
+            x1 = (-b + gmpy2.invert((b*b - 4*a*c), 2))/(2*a)
+            x2 = (-b - gmpy2.invert((b*b - 4*a*c), 2))/(2*a)
+            if x1*x2 == N:
+                print("p = "+str(x1))
+                print("q = "+str(x2))
+        except:
+            pass
     else:
         print("** ERROR : (p, q)**")
 
@@ -104,7 +91,9 @@ if __name__ == "__main__":
 
     d = WienerAttack(e, n, ciphertext)
     if d != -1:
-        print("d = "+str(d))
-        GetTheFlag(ciphertext, n, d)
+        print(f"d is {d}")
+        p = pow(ciphertext, d, n)
+        m = p.to_bytes(500, 'big').decode()
+        print(m)
     else:
         print("** ERROR : Wiener's attack Impossible**")
