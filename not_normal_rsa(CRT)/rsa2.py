@@ -11,19 +11,11 @@ ciphertext = 2772489103574256916589355598352984637133379420683868695844414660224
 # derived
 q = n//p
 
+# we have dp and dq so it's chinese remainder algo to calculate the plaintext
+# this is the normal way to decrypt RSA, not really a challenge
+
 
 def main():
-    # By implementing Chinese remainder algorithm
-    # 1) p and q are the primes
-    # 2) dp = d mod (p - 1)
-    # 3) dq = d mod (q - 1)
-    # 4) Qinv = 1/q mod p *This is not integer devision but multiplicative inverse
-    # 5) m1 = pow(c, dp, p)
-    # 6) m2 = pow(c, dq, q)
-    # 7-1) h = Qinv(m1 - m2) mod p  ; if m1 < m2
-    # 7-2) h = Qinv * (m1 + q/p)
-    # 8) m = m2 + hq
-
     p = 12734388423027263805838082500461676978623655379040968520546499300029960167301383167850280748975051651068956429007977575788319730260224838735906264562353439
     n = 157702448005359477880276703881417542766532271253898875144862237295534389932645745440321314344155006452901850061218324448819794756811585710920483305991839897576379274096843671700056818985381443851522309502756962982643477863379848745589903319467057931521291676300705108088925310179888766286840665670847263918883
     dp = 1629060793475490480491257822431675546655352945988236510811909662431004199718969287583651914413083490683498510457797851859478614033704655589108492682438851
@@ -32,26 +24,21 @@ def main():
 
     # derived
     q = 12383982863298738204036450420319386406456344897208429324304778703518027931860767965960751245832467424825926372335499256792054831897195091136923192334652797
-    print(n//p)
+
     Qinv = gmpy.invert(q, p)
     print("Qinv: " + str(Qinv))
 
     m1 = pow(c, dp, p)
-    print("m1: " + str(m1))
 
     m2 = pow(c, dq, q)
-    print("m2: " + str(m2))
 
     h = (Qinv * (m1 - m2)) % p
-    print("h: " + str(h))
 
     m = m2 + (h*q)
-    print("m: " + str(int(m)))
 
     hexadecimals = str(hex(m))[2:]
     print(hexadecimals)
     print("solved: " + str(binascii.unhexlify(hexadecimals)))
-    # solved: Theres_more_than_one_way_to_RSA
 
 
 if __name__ == "__main__":
