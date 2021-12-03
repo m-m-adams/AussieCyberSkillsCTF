@@ -55,14 +55,6 @@ def WienerAttack(e, N, C):
     return -1
 
 
-def GetTheFlag(C, N, d):
-    p = pow(C, d, N)
-
-    size = len("{:02x}".format(p)) // 2
-    print("Flag = "+"".join([chr((p >> j) & 0xff)
-          for j in reversed(range(0, size << 3, 8))]))
-
-
 def FullReverse(N, e, c):
     phi = (e*c[1]-1)//c[0]
     a = 1
