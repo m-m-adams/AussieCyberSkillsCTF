@@ -84,18 +84,11 @@ class TDAgent():
         def __init__(self):
             super().__init__()
             self.embed = nn.Embedding(7, 2)
-            self.rnn = nn.LSTM(2, 6, 2, batch_first=True)
             self.fc = nn.Linear(5, 5)
             self.fcout = nn.Linear(5, 1)
 
         def forward(self, x):
 
-            # e = self.embed(x[:, 1:])
-
-            # out, hidden = self.rnn(e)
-            # h, c = hidden
-            # last_h = h[-1]
-            # out = torch.cat((x[:, 0], last_h.squeeze()))
             hidden = F.relu(self.fc(x.to(torch.float)))
             return self.fcout(hidden)
 
